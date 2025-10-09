@@ -6,15 +6,21 @@ import '../styles/auth.css';
 
 export default function Signup() {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSignup = async e => {
     e.preventDefault();
+    const cleanEmail = email.trim();
+    const cleanPassword = password.trim();
+
+    if (!cleanEmail || !cleanPassword) {
+      setError("Please enter both email and password.");
+      return;
+  }
     try {
-      await createUserWithEmailAndPassword(auth,name, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (err) {
       setError(err.message);
@@ -26,8 +32,6 @@ export default function Signup() {
       <h1>Create Account</h1>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSignup}>
-        <input type="name" placeholder="Name"
-               value={name} onChange={e => setName(e.target.value)} />
         <input type="email" placeholder="Email"
                value={email} onChange={e => setEmail(e.target.value)} />
         <input type="password" placeholder="Password"
