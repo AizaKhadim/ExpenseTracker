@@ -1,11 +1,10 @@
 version: "3.8"
 services:
   webapp:
-    image: node:18  # or your app’s base image
-    container_name: webapp_container
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "8081:3000"  # change port to avoid conflicts
-    volumes:
-      - ./app:/usr/src/app  # mount your code
-    working_dir: /usr/src/app
-    command: npm start
+      - "8081:3000"
+    container_name: webapp_container
+
