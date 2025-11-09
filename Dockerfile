@@ -1,10 +1,13 @@
 FROM node:20
 
 WORKDIR /usr/src/app
+
+# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm install
 
+# Copy all other files
 COPY . .
 
-# React / Vite app ke liye
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
+# Start the app using the start script
+CMD ["npm", "start"]
