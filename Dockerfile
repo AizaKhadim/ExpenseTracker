@@ -1,12 +1,16 @@
 FROM node:20
+WORKDIR /app
 
-WORKDIR /usr/src/app
+COPY package*.json ./
 
-# Copy everything including dist folder
+# Force install stable version
+RUN npm install react-router-dom@6
+
+RUN npm install
+
 COPY . .
 
-# Expose port
-EXPOSE 3000
+RUN npm run build
 
-# Start Vite preview
-CMD ["npm", "run", "start"]
+EXPOSE 8081
+CMD ["npm","run","preview", "--", "--port", "8081", "--host"]
